@@ -81,7 +81,7 @@ TransactionBundle\Entity\STransaction:
         createdAt: <(new \DateTime('01-10-2014'))>
 
 TransactionBundle\Entity\Sale:
-    sale1_{0..10}:
+    sale1_{0..10000}:
         product: '@product1'
         quantity: 1
         stransaction: '@stransaction1'

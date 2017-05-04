@@ -30,6 +30,11 @@ class Product
      * Unmapped property to handle file uploads
      */
     private $file;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Sale", mappedBy="product")
+     */
+    private $sales;
     
     /**
      * @var string
@@ -494,5 +499,39 @@ class Product
     public function getFlyAmount()
     {
         return $this->flyAmount;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function addCategory(\TransactionBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     */
+    public function removeCategory(\TransactionBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }
