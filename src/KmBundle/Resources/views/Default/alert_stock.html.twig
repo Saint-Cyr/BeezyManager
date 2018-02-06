@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
     {% for branch in branches %}
 
 <li class="dropdown notifications-menu">

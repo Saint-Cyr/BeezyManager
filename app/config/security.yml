@@ -130,7 +130,7 @@ security:
         #- { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_SELLER }
-        - { path: ^/report, role: ROLE_ADMIN }
+        - { path: ^/report, role: ROLE_SUPER_ADMIN }
         - { path: ^/pos_barcode, role: ROLE_SELLER }
         - { path: ^/pos2, role: ROLE_SELLER }
         - { path: ^/pos, role: ROLE_SELLER }
