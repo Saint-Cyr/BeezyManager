@@ -145,7 +145,7 @@ class STransactionAdmin extends AbstractAdmin
             );
             
             //Make sure STransaction can be canceled only from Admin
-            if($this->isGranted('VIEW')){
+            if($this->isGranted('EDIT')){
                 $actions['cancel'] = array(
                     'label' => 'Cancel',
                     'translation_domain' => 'SonataAdminBundle',
