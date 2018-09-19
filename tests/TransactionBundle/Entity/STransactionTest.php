@@ -62,4 +62,5 @@ class STransactionTest extends WebTestCase
         $STransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
         $this->assertEquals($STransaction2->getTotalAmount(), 3500);
     }
+    
 }

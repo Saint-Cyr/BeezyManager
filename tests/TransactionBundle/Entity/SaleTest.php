@@ -74,4 +74,19 @@ class SaleTest extends WebTestCase
         $sale->setAmount();
         $this->assertEquals(150, $sale->getAmount());
     }
+    
+    /*
+     * Important update of 14 July 2018 (requested by Mr Muhamed from
+     * New World Telecom in Cameroon)
+     * this make it possible to set discount on every sale
+     * unit of STransaction
+     * for Example if someone by 2 laptops that cost 120 000 FCA and 150 000 FCFA while
+     * in the system, each one have the same unit price wich one is 150 000 FCFA then
+     * it is now possible to just set discount on that particular sale in order
+     * to have it amount ($sale->getAmount()) as 270 000 instead of 300 000
+     */
+    public function testSetAmountWithDiscount()
+    {
+        
+    }
 }

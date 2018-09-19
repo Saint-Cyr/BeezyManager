@@ -31,6 +31,7 @@ class UserAdmin extends AbstractAdmin
         $listMapper
             ->add('image', null, array('template' => 'UserBundle:Default:list.html.twig'))
             ->add('name')
+            ->add('roles')
             ->add('email')
             ->add('branch')
             ->add('enabled', null, array('editable' => true))

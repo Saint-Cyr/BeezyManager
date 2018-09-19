@@ -144,11 +144,15 @@ class STransactionAdmin extends AbstractAdmin
                 'ask_confirmation' => false
             );
             
-            $actions['cancel'] = array(
-                'label' => 'Cancel',
-                'translation_domain' => 'SonataAdminBundle',
-                'ask_confirmation' => true
-            );
+            //Make sure STransaction can be canceled only from Admin
+            if($this->isGranted('VIEW')){
+                $actions['cancel'] = array(
+                    'label' => 'Cancel',
+                    'translation_domain' => 'SonataAdminBundle',
+                    'ask_confirmation' => true
+                );
+            }
+                
 
         }
 
@@ -185,10 +189,13 @@ class STransactionAdmin extends AbstractAdmin
         foreach ($object->getSales() as $sale){
             
             foreach ($sale->getProduct()->getStocks() as $stock){
-                
-                if($stock->isTracked()){
-                    $sale->setAmount(null);
-                }    
+                //Make it possible to apply discount
+                if(!$this->isGranted('EDIT')){
+                    if($stock->isTracked()){
+                        $sale->setAmount(null);
+                    }
+                }
+                       
             }
             
         }
