@@ -80,7 +80,7 @@ class UserAdmin extends AbstractAdmin
             ->with('Personal information', array('class' => 'col-md-4'))
 
                 ->add('name', null, array('label' => 'Name (length must be more than 5)'))
-                ->add('branch')
+                ->add('branch', null, array('required' => true))
                 ->add('phoneNumber')
                 ->add('file', 'file', array('required' => false))
             ;
