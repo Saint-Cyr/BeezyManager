@@ -214,4 +214,9 @@ class STransactionAdmin extends AbstractAdmin
         
         parent::preUpdate($object);
     }
+    
+    public function getExportFields() {
+        return array('#ID'=>'id', 'Branch'=>'branch.name', 'Date'=>'createdAt', 'Products'=>'sales.product.name',
+                     'Seller'=>'user.name', 'Amount'=>'totalAmount', 'Profit'=>'profit');
+    }
 }

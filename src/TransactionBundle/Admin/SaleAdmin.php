@@ -66,5 +66,22 @@ class SaleAdmin extends AbstractAdmin
             ->add('id')
             ->add('amount')
         ;
+    }   
+    
+    public function getExportFields() {
+        return array('S. #ID'=>'id', 'T. #ID'=>'stransaction.id', 'T. Date'=>'stransaction.createdAt', 'Product'=>'product.name',
+                     'T. Seller'=>'stransaction.user.name', 'T. Amount'=>'stransaction.totalAmount',
+                     'T. Profit'=>'stransaction.profit' );
+    }
+    
+    public function getDataSourceIterator() {
+        $iterator = parent::getDataSourceIterator();
+        $iterator->setDateTimeFormat('m/d/Y');
+        return $iterator;
+    }
+    
+    public function getExportFormats() {
+        parent::getExportFormats();
+        return ['xls', 'csv'];
     }
 }
