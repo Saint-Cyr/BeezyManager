@@ -81,17 +81,30 @@ class STransactionAdmin extends AbstractAdmin
                 'inline' => 'table',
                 'sortable' => 'position',
             ))
-        ->end()
-        ->with('Other', array('class' => 'col-md-4'))
-              ->add('branch')
-              ->add('user', null, array('label' => 'Seller'))
-              ->add('createdAt', 'sonata_type_datetime_picker', array(
-                      'dp_side_by_side'  => true,
-                      'dp_use_current'   => false,
-                      'dp_use_seconds'   => false,
-              ))
-        ->end()
-        ;
+        ->end();
+        
+        if($this->isGranted('SUPER-ADMIN')){
+            $formMapper
+            ->with('Other', array('class' => 'col-md-4'))
+                ->add('branch')
+                ->add('user', null, array('label' => 'Seller'))
+                ->add('createdAt', 'sonata_type_datetime_picker', array(
+                        'dp_side_by_side'  => true,
+                        'dp_use_current'   => false,
+                        'dp_use_seconds'   => false,
+                ))
+            ->end();
+        }else{
+            $formMapper
+            ->with('Other', array('class' => 'col-md-4'))
+                ->add('createdAt', 'sonata_type_datetime_picker', array(
+                        'dp_side_by_side'  => true,
+                        'dp_use_current'   => false,
+                        'dp_use_seconds'   => false,
+                ))
+            ->end();
+        }
+        
         
         /*$formMapper
         ->with('Products', array('class' => 'col-md-6'))
