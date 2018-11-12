@@ -143,4 +143,78 @@ class ApiController extends Controller
         
         return 'successfull transaction!';
     }
+    
+    /*This method serves the third party technology (Android App, ...)
+     * 
+     */
+    public function postExternLoginAction(Request $request)
+    {
+        //Get the data sent by the third party technology
+        $inputData = json_decode($request->getContent(), true);
+        //Get the ApiHandler service
+        $apiHandler = $this->get('km.api_handler');
+        //Login
+        $outPut = $apiHandler->login($inputData);
+        return $outPut;
+    }
+    
+    /*This method fetch data to display on dashboard for third party
+     * technology
+     */
+    public function getDashboardAction(Request $request)
+    {
+        //Get the statistic handler service
+        $statisticHandler = $this->get('km.statistic_handler');
+        //Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get all the branches
+        $branches = $em->getRepository('KmBundle:Branch')->findAll();
+        //Prepare resum for all branch
+        $totalSale = null;
+        $totalProfit = null;
+        $totalExpenditure = null;
+        $totalBalance = null;
+
+        foreach ($branches as $b){
+            //Hydrate every branch
+            $statisticHandler->setBranchFlyData($b);
+            $totalSale = $totalSale + $b->getFlySaleAmount();
+            $totalExpenditure = $totalExpenditure + $b->getFlyExpenditureAmount();
+            $totalProfit = $totalProfit + $b->getFlyProfitAmount();
+            $totalBalance = $totalBalance + $b->getFlyBalanceAmount();
+        }
+        
+        return array('totalSale' => $totalSale,
+                    'totalProfit' => $totalProfit,
+                    'totalBalance' => $totalBalance,
+                    'totalExpenditure' => $totalExpenditure,);
+    }
+    
+    /*This method provide data (sale, profit, expenditure) for 
+     * each branch
+     */
+    public function getBranchesDataAction(Request $request)
+    {
+        //Get the statistic handler service
+        $statisticHandler = $this->get('km.statistic_handler');
+        //Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get all the branches
+        $branches = $em->getRepository('KmBundle:Branch')->findAll();
+        
+        foreach ($branches as $b){
+            //Hydrate every branch
+            $statisticHandler->setBranchFlyData($b);
+        }
+        
+        //put the branche in the right data structure
+        foreach ($branches as $b){
+            $branchesTab[] = array('name' => $b->getName(), 'branch_sale_amount' => $b->getFlySaleAmount(),
+                                   'branch_profit_amount' => $b->getFlyProfitAmount(),
+                                   'branch_expenditure_amount' => $b->getFlyExpenditureAmount(),
+                                   'branch_id' => $b->getId());
+        }
+        
+        return $branchesTab;
+    }
 }

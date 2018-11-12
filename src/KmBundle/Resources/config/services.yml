@@ -34,3 +34,7 @@ services:
         arguments: [~, KmBundle\Entity\Branch, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Admin, label: Branch }
+    
+    km.api_handler:
+        class: KmBundle\Service\ApiHandler
+        arguments: ["@doctrine.orm.entity_manager", "@security.encoder_factory", "@fos_user.user_provider.username", "@security.token_storage", "@service_container"]
