@@ -19,7 +19,6 @@ class BranchTest extends WebTestCase
     private $application;
     private $saleHandler;
 
-
     public function setUp()
     {
         static::$kernel = static::createKernel();
@@ -30,7 +29,18 @@ class BranchTest extends WebTestCase
         $this->saleHandler = $this->application->getKernel()->getContainer()->get('transaction.sale_handler');
     }
     
-    public function testGetAlertStocks()
+    /*
+     * this test make sure any fly data returned by any method return
+     * 0 if apply because up to the data of writing this test the methods
+     */
+    public function testGetFlyData()
+    {
+        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
+        
+        $this->assertEquals($branch->getFlySaleAmount(), 0);
+    }
+    
+    /*public function testGetAlertStocks()
     {
         //Notice that one of the stock is decreasing by a script any time test is running
         //Get the branch
@@ -48,5 +58,5 @@ class BranchTest extends WebTestCase
         $this->assertEquals($alertStocks[1]->getProduct()->getName(), 'Manette 4500');
         $this->assertEquals($alertStocks[1]->getAlertLevel(), 2);
         $this->assertEquals($alertStocks[1]->getValue(), -1);
-    }
+    }*/
 }

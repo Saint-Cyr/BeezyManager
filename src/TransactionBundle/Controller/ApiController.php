@@ -144,20 +144,6 @@ class ApiController extends Controller
         return 'successfull transaction!';
     }
     
-    /*This method serves the third party technology (Android App, ...)
-     * 
-     */
-    public function postExternLoginAction(Request $request)
-    {
-        //Get the data sent by the third party technology
-        $inputData = json_decode($request->getContent(), true);
-        //Get the ApiHandler service
-        $apiHandler = $this->get('km.api_handler');
-        //Login
-        $outPut = $apiHandler->login($inputData);
-        return $outPut;
-    }
-    
     /*This method fetch data to display on dashboard for third party
      * technology
      */
@@ -184,10 +170,31 @@ class ApiController extends Controller
             $totalBalance = $totalBalance + $b->getFlyBalanceAmount();
         }
         
-        return array('totalSale' => $totalSale,
-                    'totalProfit' => $totalProfit,
-                    'totalBalance' => $totalBalance,
-                    'totalExpenditure' => $totalExpenditure,);
+        $outPut['general_data'] =  array('totalSale' => $totalSale,
+                                        'totalProfit' => $totalProfit,
+                                        'totalBalance' => $totalBalance,
+                                        'totalExpenditure' => $totalExpenditure,);
+        $outPut['barchart'] = array('jan' => 10000, 'feb' => 1500, 'mar' => 2000,
+                                    'apr' => 2500, 'may' => 3000, 'jun' => 3500,
+                                    'jul' => 4000, 'aug' => 4500, 'sep' => 5000,
+                                    'oct' => 5500, 'nov' => 6000, 'dec' => 6500);
+        $outPut['pie_chart'] = array('Product Name 1' => 2400000, 'Product Name 2' => 1700000,
+                                     'Product Name 3' => 1300000, 'Product Name 4' => 750000);
+        return $outPut;
+    }
+    
+    /*This method serves the third party technology (Android App, ...)
+     * 
+     */
+    public function postExternLoginAction(Request $request)
+    {
+        //Get the data sent by the third party technology
+        $inputData = json_decode($request->getContent(), true);
+        //Get the ApiHandler service
+        $apiHandler = $this->get('km.api_handler');
+        //Login
+        $outPut = $apiHandler->login($inputData);
+        return $outPut;
     }
     
     /*This method provide data (sale, profit, expenditure) for 
@@ -209,6 +216,7 @@ class ApiController extends Controller
         
         //put the branche in the right data structure
         foreach ($branches as $b){
+            
             $branchesTab[] = array('name' => $b->getName(), 'branch_sale_amount' => $b->getFlySaleAmount(),
                                    'branch_profit_amount' => $b->getFlyProfitAmount(),
                                    'branch_expenditure_amount' => $b->getFlyExpenditureAmount(),
@@ -216,5 +224,81 @@ class ApiController extends Controller
         }
         
         return $branchesTab;
+    }
+    
+    /*This method provide report data for a particular branch
+     * @param init_date: "mm-dd-yyyy"
+     * @param fin_date: "mm-dd-yyyy"
+     * @param branch_id: Integer
+     */
+    public function postBranchReportAction(Request $request)
+    {
+        //Get the branch name based on the branch #ID sent from the client
+        $branch = $this->getDoctrine()->getManager()->getRepository('KmBundle:Branch')
+                                          ->find($request->get('branch_id'));
+        //Make sure branch exist in DB
+        if(!$branch){
+            return array('branch not found');
+        }
+        $outPut['branch_name'] = $branch->getName();
+        $outPut['ini_date'] = $request->get('ini_date');
+        $outPut['fin_date'] = $request->get('fin_date');
+        $outPut['general_data'] =  array('totalSale' => 100000,
+                                        'totalProfit' => 25000,
+                                        'totalBalance' => 90000,
+                                        'totalExpenditure' => 10000);
+        $outPut['barchart'] = array('jan' => 10000, 'feb' => 1500, 'mar' => 2000,
+                                    'apr' => 2500, 'may' => 3000, 'jun' => 3500,
+                                    'jul' => 4000, 'aug' => 4500, 'sep' => 5000,
+                                    'oct' => 5500, 'nov' => 6000, 'dec' => 6500);
+        $outPut['pie_chart'] = array('Product Name 1' => 2400000, 'Product Name 2' => 1700000,
+                                     'Product Name 3' => 1300000, 'Product Name 4' => 750000);
+        
+        return $outPut;
+    }
+    
+    /*This method provide report data for a particular branch
+     * 
+     */
+    public function getFaqAction()
+    {
+        //Get the FAQ from DB...
+        $faq_1 = array('url' => 'https://www.google.com/images/1.jpg',
+                       'content' => 'Lorem ipsum dolor sit amet, mei volutpat scribentur ne. Facete omittam in cum,'
+                                    . 'mel nibh vide no. Eam ignota referrentur ei. Error iudico vel in, ea vix aliquam '
+                                    . 'feugiat, eam iisque delenit in. Ornatus suavitate assentior an mei, his lorem '
+                                    . 'labore cu, sonet possim in has. Vel ea hendrerit evertitur, option adipiscing '
+                                    . 'in nam, singulis efficiendi ex duo.');
+         $faq_2 = array('url' => 'https://www.google.com/images/2.jpg',
+                       'content' => 'Lorem ipsum dolor sit amet, mei volutpat scribentur ne. Facete omittam in cum,'
+                                    . 'mel nibh vide no. Eam ignota referrentur ei. Error iudico vel in, ea vix aliquam '
+                                    . 'feugiat, eam iisque delenit in. Ornatus suavitate assentior an mei, his lorem '
+                                    . 'labore cu, sonet possim in has. Vel ea hendrerit evertitur, option adipiscing '
+                                    . 'in nam, singulis efficiendi ex duo.');
+          $faq_3 = array('url' => 'https://www.google.com/images/3.jpg',
+                       'content' => 'Lorem ipsum dolor sit amet, mei volutpat scribentur ne. Facete omittam in cum,'
+                                    . 'mel nibh vide no. Eam ignota referrentur ei. Error iudico vel in, ea vix aliquam '
+                                    . 'feugiat, eam iisque delenit in. Ornatus suavitate assentior an mei, his lorem '
+                                    . 'labore cu, sonet possim in has. Vel ea hendrerit evertitur, option adipiscing '
+                                    . 'in nam, singulis efficiendi ex duo.');
+           $faq_4 = array('url' => 'https://www.google.com/images/4.jpg',
+                       'content' => 'Lorem ipsum dolor sit amet, mei volutpat scribentur ne. Facete omittam in cum,'
+                                    . 'mel nibh vide no. Eam ignota referrentur ei. Error iudico vel in, ea vix aliquam '
+                                    . 'feugiat, eam iisque delenit in. Ornatus suavitate assentior an mei, his lorem '
+                                    . 'labore cu, sonet possim in has. Vel ea hendrerit evertitur, option adipiscing '
+                                    . 'in nam, singulis efficiendi ex duo.');
+             
+        return array($faq_1, $faq_2, $faq_3, $faq_4);
+    }
+    
+    /*
+     * This method allow client to save the app setting
+     */
+    public function postSettingAction(Request $request)
+    {
+        //Get the setting parameters
+        $language = $request->get('language');
+        $customerId = $request->get('customer_id');
+        //Save them in DB.
     }
 }

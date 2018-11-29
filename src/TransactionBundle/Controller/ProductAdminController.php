@@ -7,6 +7,8 @@ use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ProductAdminController extends CRUDController
 {
@@ -20,6 +22,50 @@ class ProductAdminController extends CRUDController
      */
     public function createAction()
     {
+        //Read products list from a CSV file and save in DB if aplicable
+                if(true){
+                    /*$inputFileType = 'CSV';
+                    $inputFileName = getcwd().'/1.csv';
+                    $sheetname = 'Data Sheet #2';
+
+                    
+                    
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+                    $spreadsheet = $reader->load($inputFileName);
+                    
+                    $worksheet = $spreadsheet->getActiveSheet();
+                    $rows = $worksheet->toArray();*/
+                    
+                }
+        //Read products list with eventually other information and write them in a CSV file
+                if(true){
+                    //load spreadsheet
+                    /*$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(getcwd().'/1.xlsx');
+
+                    //change it
+                    $sheet = $spreadsheet->getActiveSheet();
+                    
+                    //Write all the Sale Transaction important data for analyses
+                    $stransactions = $this->getDoctrine()->getManager()
+                                          ->getRepository('TransactionBundle:STransaction')
+                                          ->findAll();
+                    
+                    foreach ($stransactions as $index => $st){
+                        if($st->getUser()){
+                            $userName = $st->getUser()->getName();
+                        }else{
+                            $userName = 'Unknown';
+                        }
+                        $sheet->setCellValue('A'.$index, $userName);
+                        $sheet->setCellValue('B'.$index, $st->getTotalAmount());
+                    }
+                                        
+
+                    //write it again to Filesystem with the same name (=replace)
+                    $writer = new Xlsx($spreadsheet);
+                    $writer->save(getcwd().'/1.xlsx');*/
+                }
+                
         $request = $this->getRequest();
         // the key used to lookup the template
         $templateKey = 'edit';
@@ -73,6 +119,7 @@ class ProductAdminController extends CRUDController
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
                 $this->admin->checkAccess('create', $object);
+                
 
                 try {
                     $object = $this->admin->create($object);

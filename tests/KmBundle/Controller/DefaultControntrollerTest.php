@@ -22,7 +22,7 @@ class DefaultControllerTest extends WebTestCase
         $loginManager = $container->get('fos_user.security.login_manager');
         $firewallName = $container->getParameter('fos_user.firewall_name');
 
-        $user = $userManager->findUserBy(array('username' => 'admin'));
+        $user = $userManager->findUserBy(array('username' => 'super-admin'));
         $loginManager->loginUser($firewallName, $user);
 
         // save the login token into the session and put it in a cookie
@@ -42,6 +42,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('D 1', $client->getResponse()->getContent());
-        $this->assertNotContains('D 2', $client->getResponse()->getContent());
+        $this->assertNotContains('D2', $client->getResponse()->getContent());
     }
 }
+    

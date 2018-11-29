@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
             new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

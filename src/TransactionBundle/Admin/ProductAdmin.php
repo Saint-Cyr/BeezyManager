@@ -143,4 +143,13 @@ class ProductAdmin extends AbstractAdmin
             $image->refreshUpdated();
         }
     }
+    
+    public function getExportFields() {
+        return array('#ID'=>'id', 'Name'=>'name', 'Unit Price' => 'unitPrice', 'W. Sale Price'=> 'wholeSalePrice');
+    }
+    
+    public function getExportFormats() {
+        parent::getExportFormats();
+        return ['xls', 'csv'];
+    }
 }

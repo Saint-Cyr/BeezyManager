@@ -346,6 +346,12 @@ class Branch
      */
     public function getFlySaleAmount()
     {
+        //Make sure at least any fly data contain a value 
+        //in order to keep the right data structure for the API
+        if(!$this->flySaleAmount){
+            return 0;
+        }
+        
         return $this->flySaleAmount;
     }
 
@@ -370,6 +376,11 @@ class Branch
      */
     public function getFlyProfitAmount()
     {
+        //Make sure at least any fly data contain a value 
+        //in order to keep the right data structure for the API
+        if(!$this->flyProfitAmount){
+            return 0;
+        }
         return $this->flyProfitAmount;
     }
 
@@ -394,6 +405,11 @@ class Branch
      */
     public function getFlyExpenditureAmount()
     {
+        //Make sure at least any fly data contain a value 
+        //in order to keep the right data structure for the API
+        if(!$this->flyExpenditureAmount){
+            return 0;
+        }
         return $this->flyExpenditureAmount;
     }
 
