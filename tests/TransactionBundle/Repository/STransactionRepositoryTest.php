@@ -21,6 +21,20 @@ class STransactionRepositoryTest extends KernelTestCase
             ->get('doctrine')
             ->getManager();
     }
+    
+    public function testGetFromTo()
+    {
+        $em = $this->em;
+        //As setup in the fixture
+        $startDate = new \DateTime("1-10-2014");
+        $finalDate = new \DateTime("1-10-2014");
+        
+        
+        $stransactions = $em->getRepository('TransactionBundle:STransaction')
+                            ->getFromTo($startDate, $finalDate);
+        
+        $this->assertEquals(2, count($stransactions));
+    }
 
     public function testGetforToday()
     {

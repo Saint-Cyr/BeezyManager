@@ -10,6 +10,23 @@ namespace TransactionBundle\Repository;
  */
 class STransactionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /*this method suppose to get data
+     * from a date range
+     */
+    public function getFromTo($startDate, $endDate)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder->select('st')
+                    ->from('TransactionBundle:STransaction', 'st')
+                    ->where('st.createdAt >= :startDate')
+                    ->andWhere('st.createdAt <= :endDate')
+                    ->setParameter('startDate', $startDate)
+                    ->setParameter('endDate', $endDate);
+        $result = $queryBuilder->getQuery()->getResult();
+        
+        return $result;
+    }
+    
     public function findLast()
     {
         $qb = $this->createQueryBuilder('st');

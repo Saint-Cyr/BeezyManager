@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a9302dbd937f584b94805e334fdca5c",
+    "content-hash": "702472746188cc0dbfbd8aac3da7283a",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -2365,6 +2365,55 @@
             ],
             "description": "A Symfony 2 event listener for decoding JSON encoded request content",
             "time": "2017-04-24T10:47:15+00:00"
+        },
+        {
+            "name": "raindrop/sonata-theme-bundle",
+            "version": "dev-master",
+            "target-dir": "Raindrop/SonataThemeBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raindropdevs/RaindropSonataThemeBundle.git",
+                "reference": "2bcadc6e354439834b4e170c980b9844b78d9e7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raindropdevs/RaindropSonataThemeBundle/zipball/2bcadc6e354439834b4e170c980b9844b78d9e7c",
+                "reference": "2bcadc6e354439834b4e170c980b9844b78d9e7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "sonata-project/admin-bundle": ">=2.3"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Raindrop\\SonataThemeBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raindrop Dev Team",
+                    "homepage": "https://github.com/raindropdevs/RaindropSonataThemeBundle/graphs/contributors"
+                }
+            ],
+            "description": "Symfony 2 SonataAdminBundle Themes",
+            "homepage": "https://github.com/raindropdevs",
+            "keywords": [
+                "admin",
+                "sonata",
+                "theme"
+            ],
+            "time": "2017-07-09T13:55:14+00:00"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -4936,7 +4985,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "eightpoints/guzzle-bundle": 20
+        "eightpoints/guzzle-bundle": 20,
+        "raindrop/sonata-theme-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

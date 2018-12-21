@@ -23,47 +23,83 @@ class ProductAdminController extends CRUDController
     public function createAction()
     {
         //Read products list from a CSV file and save in DB if aplicable
-                if(true){
-                    /*$inputFileType = 'CSV';
+                if(false){
+                    $inputFileType = 'CSV';
                     $inputFileName = getcwd().'/1.csv';
                     $sheetname = 'Data Sheet #2';
 
-                    
-                    
                     $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
                     $spreadsheet = $reader->load($inputFileName);
                     
+                    //Get the second sheet for the first content an introduction message
+                    
+                    $spreadsheet->getSheetByName('PRODUCT LIST');
+                    
                     $worksheet = $spreadsheet->getActiveSheet();
-                    $rows = $worksheet->toArray();*/
+                    $rows = $worksheet->toArray();
+                    
+                    //Save in DB
+                    foreach ($rows as $key => $r){
+                        if($key != 0){
+                            //Save this rows in DB
+                            //Make sure it has not yet been input in DB
+                            if(/*Barcode exist*/true){
+                                
+                            }
+                            $product_name = $r[1];
+                            $product_barcode = $r[4];
+                            $product_uniprice = $r[3];
+                            var_dump($product_barcode);exit;
+                        }
+                    }
+                    
+                    print_r($rows);exit;
                     
                 }
         //Read products list with eventually other information and write them in a CSV file
-                if(true){
+                if(false){
                     //load spreadsheet
-                    /*$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(getcwd().'/1.xlsx');
+                    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(getcwd().'/original.xlsx');
 
                     //change it
-                    $sheet = $spreadsheet->getActiveSheet();
+                    //$sheet = $spreadsheet->getActiveSheet();
+                    //$sheet = $spreadsheet->getSheetByName('DATA');
+                    $sheet = $spreadsheet->getSheet(6);
                     
                     //Write all the Sale Transaction important data for analyses
                     $stransactions = $this->getDoctrine()->getManager()
                                           ->getRepository('TransactionBundle:STransaction')
                                           ->findAll();
-                    
+                    //set the title of the sheet
+                    $sheet->setCellValue('B1', 'From 2/2/2018 to 3/3/2018');
+                    //We need to start from 3rd line
+                    $lineNumber = 4;
                     foreach ($stransactions as $index => $st){
                         if($st->getUser()){
                             $userName = $st->getUser()->getName();
                         }else{
                             $userName = 'Unknown';
                         }
-                        $sheet->setCellValue('A'.$index, $userName);
-                        $sheet->setCellValue('B'.$index, $st->getTotalAmount());
+                        
+                        //Loop over order
+                        foreach ($st->getSales() as $order){
+                            $sheet->setCellValue('B'.$lineNumber, $st->getId());
+                            $sheet->setCellValue('C'.$lineNumber, $order->getId());
+                            $sheet->setCellValue('D'.$lineNumber, $st->getCreatedAt());
+                            $sheet->setCellValue('E'.$lineNumber, $order->getProduct()->getName());
+                            $sheet->setCellValue('F'.$lineNumber, $order->getProduct()->getUnitPrice());
+                            $sheet->setCellValue('G'.$lineNumber, $order->getQuantity());
+                            $sheet->setCellValue('H'.$lineNumber, $order->getAmount());
+                            $sheet->setCellValue('I'.$lineNumber, $userName);
+                            $lineNumber = $lineNumber+1;
+                        }
+                        
+                        
                     }
                                         
-
                     //write it again to Filesystem with the same name (=replace)
                     $writer = new Xlsx($spreadsheet);
-                    $writer->save(getcwd().'/1.xlsx');*/
+                    $writer->save(getcwd().'/auto_generated.xlsx');
                 }
                 
         $request = $this->getRequest();
