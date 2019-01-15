@@ -5,6 +5,7 @@
   <title>POS1</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('vendor/jquery.scannerdetection.js') }}"></script>
 
   <!--<script data-require="angular.js@1.2.13" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular.js"></script>-->
   <script data-require="angular.js@1.2.13" data-semver="1.2.13" src="{{ asset('vendor/angular-1.2.13/angular.js') }}"></script>
@@ -42,7 +43,9 @@ app.controller('POSController', function ($scope, $http)
             {% endfor %} 
       {% endfor %}
   };
-    
+  
+  
+    //Declaration of global variables
     $scope.itemsCnt = 1;
     $scope.order = [];
     $scope.isDisabled = true;
@@ -52,28 +55,24 @@ app.controller('POSController', function ($scope, $http)
     }
     
   //$scope.barcode = 6588969543172554;
-  $scope.$watch("barcode", function(newValue, oldValue) {
-    if (newValue)
-      addSale(newValue);
-  });
   
-  function addSale(barcode) {
-    var item = data[barcode];
+
+  $(document).scannerDetection({
+	timeBeforeScanTest: 2000, // wait for the next character for upto 200ms
+	startChar: [120], // Prefix character for the cabled scanner (OPL6845R)
+	endChar: [13], // be sure the scan is complete if key 13 (enter) is detected
+	avgTimeByChar: 40, // it's not a barcode if a character takes longer than 40ms
+	onComplete: function(barcode){
+        
+        var item = data[barcode];
     
     var foodItem = {
-        orderedItemCnt: 1,
-        totalPrice: item.price,
-        detail: item.detail,
-        itemId: item.id,
-        id: $scope.itemsCnt,
-        item: item,
-    };
-    
-    //By S@int-Cyr
-    $scope.fileName = item.fileName;
-    $scope.barcode = '';
-    console.log(foodItem);
-    
+        orderedItemCnt : 1,
+        totalPrice : item.price,
+        itemId : item.id, 
+        id : $scope.itemsCnt,
+        item : item
+      };
     
     // Find if the item is already in Cart
         var cartItems = $.grep($scope.order, function(e){ return e.itemId == item.id; });
@@ -82,11 +81,22 @@ app.controller('POSController', function ($scope, $http)
             cartItems[0].orderedItemCnt = ++ cartItems[0].orderedItemCnt; 
             cartItems[0].totalPrice = item.price * cartItems[0].orderedItemCnt;
          }
+         
          else{
             $scope.order.push(foodItem);
-            $scope.itemsCnt = $scope.order.length; 
+            $scope.itemsCnt = $scope.order.length;
+             
          }
-  }
+    
+   
+    $scope.$apply();
+        
+        }        	
+    });
+  
+  
+  
+ 
     
     $scope.getSum = function() {
       var i = 0,
@@ -101,9 +111,11 @@ app.controller('POSController', function ($scope, $http)
     $scope.addItem = function(item, index) {
           item.orderedItemCnt = ++ item.orderedItemCnt; 
           item.totalPrice = item.item.price * item.orderedItemCnt;
+          //Important update for 2019: after clicking to add product, one can scan new product
+          //document.getElementById('barcodeId').focus();
+          //document.getElementById('barcodeId').value = '';    
     };
-
-
+    
     $scope.subtractItem = function(item, $index)
     {
       if (item.orderedItemCnt > 1) {
@@ -115,6 +127,9 @@ app.controller('POSController', function ($scope, $http)
           // isDisabled = false;    
          // $("#SubstractItemBtn").prop("disabled", true);
       }
+      
+      document.getElementById('barcodeId').focus();
+     
     }
 
     $scope.deleteItem = function(index) {
@@ -376,18 +391,12 @@ app.controller('POSController', function ($scope, $http)
         </div>
         <div class="jumboron">
         <div class="row">
-            <form name="itemForm">
-                  <input type="password" name="barcode"  style="opacity: 0;" id="barcodeId"
-                    ng-model="barcode" ng-model-options="{ debounce: 500 }" autofocus="true" ng-focus="focused()" ng-blur="blurred()"/>
-            <br/>
-            </form>
+            
 
-            <div class="col-sm-6" onclick="document.getElementById('barcodeId').focus(); document.getElementById('barcodeId').value = ''; return false;">
-                  <span ng-model="focusImage">
-                      <i class="fa fa-cog {{ focusImage }} fa-5x fa-fw" aria-hidden="true"></i>
-                  </span>
+            <div class="col-sm-6"">
+                  
         {% endverbatim %}
-                <a href="" ><img src="{{ asset('barecode.jpg') }}" width="125" for="barcodeId"/></a>
+                
             </div>
                 {% verbatim %}
             <div class="col-sm-6">
@@ -416,20 +425,19 @@ app.controller('POSController', function ($scope, $http)
               
               <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in order">
-                    <span style="font-size: 23px;">{{item.detail}}</span>
-                  
-                  <div class="btn-group pull-right" role="group" aria-label="...">
-                      <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
-                        <span type="button" class="fa fa-minus"></span>
-                      </button>
-                      <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
-                        <span class="fa fa-plus"></span>
-                      </button>
-                      
-                       <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
-                        <span class="fa fa-trash-o"></span>
-                      </button>                     
-                  </div>
+                    <span style="font-size: 23px;">{{item.item.detail}}</span>
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                        <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
+                          <span type="button" class="fa fa-minus"></span>
+                        </button>
+                        <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
+                          <span class="fa fa-plus"></span>
+                        </button>
+
+                         <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
+                          <span class="fa fa-trash-o"></span>
+                        </button>                     
+                    </div>
                   <div class="label label-success pull-right">{{item.totalPrice | currency:'FCFA ':true:'1.2-2'}}</div>
                   <div class="label label-default pull-right">{{item.orderedItemCnt}}</div>
                 </li>
@@ -490,6 +498,7 @@ app.controller('POSController', function ($scope, $http)
                 <div style="float:right; font-size: 80%; position: relative; top:-10px">
                     <a href="#" style="color: #320070;">© 2017 - Saint-Cyr MAPOUKA</a>
                 </div>
+                
             </div>
         </div>
     </div>
