@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <title>POS2 -- updated</title>
+  <title>POS2</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
   
@@ -314,7 +314,7 @@ function isEmpty(obj) {
     }
   </style>
 </head>
-<body data-ng-controller="POSController" style="background-color:#eee;">
+<body data-ng-controller="POSController">
   <div class="container">
       <br>
     <div class="row">
@@ -324,12 +324,38 @@ function isEmpty(obj) {
     </div>
     <div class="row">
       <div class="col-sm-6">
-        {% for p in products %}
-            <button class="btn btn-primary" ng-click="add(food.{{ p.id }})" style="width: 130px; height: 110px;">
-                {{ p }}
-            </button>
-        {% endfor %}
-    {% verbatim %}    
+        
+        {% for category in categories %}
+            {% if category.displayed %}
+                <div class="box" style="margin-top: 2px;">
+                    <div class="text-info">{{ category.name }}</div>
+                    <style>
+                        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                            background-color: #5e388f !important;
+                        }
+                    </style>
+                    <hr>
+                    {% for p in category.products %}
+                        {% for stock in app.user.branch.stocks %}
+                            {% if stock.product.id == p.id %}
+                                {% if (p.image == "") or (not p.imagePos) %}
+                                    <button class="btn btn-primary" ng-click="add(food.{{ p.id }})" style="width: 130px; height: 110px;">
+                                        {{ p }}
+                                    </button>
+                                {% else %}
+                                    <img src="{{ asset('upload/product/'~p.image) }}" style="width: 130px; height: 110px;"
+                                    ng-click="add(food.{{ p.id }})" alt="{{ p.name }}" class="img-thumbnail">
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+          <br></br>
+          {% endfor %}
+          {% verbatim %}
+        
+          
       </div>
       <div class="col-sm-6">
         
