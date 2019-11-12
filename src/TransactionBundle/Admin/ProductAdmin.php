@@ -19,6 +19,8 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('barcode')
             ->add('categories')
+	    ->add('unitPrice')
+	    ->add('wholeSalePrice')
             
         ;
     }
@@ -145,7 +147,7 @@ class ProductAdmin extends AbstractAdmin
     }
     
     public function getExportFields() {
-        return array('#ID'=>'id', 'Name'=>'name', 'Unit Price' => 'unitPrice', 'W. Sale Price'=> 'wholeSalePrice');
+        return array('#ID'=>'id', 'Name'=>'name', 'Unit Price' => 'unitPrice', 'W. Sale Price'=> 'wholeSalePrice', 'Barecode'=>'barcode');
     }
     
     public function getExportFormats() {

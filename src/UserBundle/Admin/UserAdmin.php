@@ -147,4 +147,14 @@ class UserAdmin extends AbstractAdmin
             $image->refreshUpdated();
         }
     }
+    
+    public function getExportFields() {
+        return array('Username'=>'username', 'Em@il'=>'email', 'Password' => 'password', 
+                     'Roles'=> 'roles', 'Enabled' => 'enabled');
+    }
+    
+    public function getExportFormats() {
+        parent::getExportFormats();
+        return ['xls', 'csv'];
+    }
 }

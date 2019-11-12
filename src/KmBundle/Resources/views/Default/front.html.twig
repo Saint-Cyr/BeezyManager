@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>BeezyManager</title>
+    <title>BSol Server</title>
 
     <!-- Bootstrap -->
     <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -16,7 +16,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
-    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/logo_bsol2.ico') }}' />
   </head>
 
   <body class="nav-md">
@@ -26,27 +26,12 @@
         <div class="col-md-12">
           <div class="col-middle">
             <div class="text-center text-center">
-                <img src="{{ asset('images/logo2.jpg') }}" style="width: 170px; height: 155px; margin-bottom: 23px;" />
+                {#<img src="{{ asset('images/logo2.jpg') }}" style="width: 170px; height: 155px; margin-bottom: 23px;" />#}
+                </br>
+                </br>
                 </br>
               <div class="row top_tiles">
-              <a href="{{ path('transaction_pos_barcode') }}">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
-                  <div class="count">POS 1</div>
-                  
-                </div>
-              </div>
-              </a>
-              <a href="{{ path('transaction_pos2') }}">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
-                  <div class="count">POS 2</div>
-                  
-                </div>
-              </div>
-              </a>
+              
               <a href="{{ path('admin_transaction_stransaction_create') }}">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
                 <div class="tile-stats">
@@ -56,15 +41,7 @@
                 </div>
               </div>
               </a>
-              <a href="#">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
-                  <div class="count" style="color: #bab8b8;">SOON </div>
-                  
-                </div>
-              </div>
-              </a>
+              
             {% if (is_granted('ROLE_ADMIN')) %}
               <a href="{{ path('sonata_admin_dashboard') }}">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -77,6 +54,15 @@
               </a>
               {% endif %}
               {% if (is_granted('ROLE_SUPER_ADMIN')) %}
+              <a href="#">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-line-chart"></i></div>
+                  <div class="count">D 2</div>
+                 
+                </div>
+              </div>
+              </a>
               <a href="{{ path('km_dashboard') }}">
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
@@ -88,29 +74,12 @@
               </a>
               
               {% endif %} 
-              <a href="#">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-bars"></i></div>
-                  <div class="count" style="color: #bab8b8;">SOON</div>
-                 
-                </div>
-              </div>
-              </a>
-              <a href="#">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-bars"></i></div>
-                  <div class="count" style="color: #bab8b8;">SOON</div>
-                 
-                </div>
-              </div>
-              </a>
+              
             
             </div>
             <hr>
                 <span style="color: white;">©</span>
-              <a href="#" style="color: white;"> 2019 - BeezyManager</a>
+              <a href="#" style="color: white;"> 2019 - BSol</a>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
     {% if (object.barcode) %}
         <a href="{{ path('km_homepage', {'barcode':object.barcode}) }}" target="_blank">
             {% if object.image == "" %}
-                <img src="{{ asset('/images/logo.png') }}" alt="{{ object.name }}" style="width: 85px; height: 65px;"/>
+                <img src="{{ asset('/images/logo_bsol2.jpg') }}" alt="{{ object.name }}" style="width: 55px; height: 45px;"/>
             {% else %}
                 <img src="{{ asset('upload/product/'~object.image) }}" alt="{{ object.name }}" style="width: 85px; height: 65px;"/>
             {% endif %}

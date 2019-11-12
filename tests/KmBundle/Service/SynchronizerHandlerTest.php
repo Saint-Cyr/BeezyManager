@@ -3,7 +3,7 @@
 /*
  * This file is part of Components of BeezyManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) TinzapaTech <mapoukacyr@yahoo.fr>
+ * (c) iSTech 2020 <mapoukacyr@yahoo.fr>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */

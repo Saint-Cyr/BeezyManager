@@ -9,6 +9,9 @@ use TransactionBundle\Entity\STransaction;
 class ApiController extends Controller
 {
     
+    /*
+     * @deprecated since 0.3-server
+     */
     public function postDownloadAction(Request $request)
     {
         //we need to work with DB
@@ -54,6 +57,7 @@ class ApiController extends Controller
     
     public function postUploadAction(Request $request)
     {
+        
         //Verbose
         $faild = false;
         $faildMessage = 'successful';
@@ -61,21 +65,18 @@ class ApiController extends Controller
         $em = $this->getDoctrine()->getManager();
         //Get the input data sent by the front application
         $inputData = json_decode($request->getContent(), true);
-        //Make sure all the products exits
-        foreach ($inputData['order'] as $key => $s){
-            //Fetch the product
-            if(!$s['id']){
-                $faild = true;
-                $faildMessage = "the property onlineId of product  #".$key." in order[] not defined";
-                return array('faild' => $faild, 'message' => $faildMessage);
-            }
+        //Validate the data structure and it content
+        if(array_key_exists('st_synchrone_id', $inputData)&&
+           array_key_exists('user_email', $inputData)&&
+           array_key_exists('order', $inputData)&&
+           array_key_exists('total', $inputData)&&
+           array_key_exists('date_time', $inputData)&&
+           array_key_exists('branch_online_id', $inputData))
+        {
+            // Process evvery thing here...
             
-            $product = $em->getRepository('TransactionBundle:Product')->find($s['id']);
-            if(!$product){
-                $faild = true;
-                $faildMessage = 'product for #ID: '.$s['id'].' not found in DB.';
-                return array('faild' => $faild, 'message' => $faildMessage);
-            }
+        }else{
+            return array('faild' => "Invalid data structure");
         }
         
         //If stransaction already exist, then get out.
@@ -86,7 +87,8 @@ class ApiController extends Controller
             $faild = true;
             $faildMessage = 'transaction already exists';
             return array('faild' => $faild,
-                     'faildMessage' => $faildMessage,
+                     'remove_st' => true,
+                     'faild_message' => $faildMessage,
                      'st_synchrone_id' => $stransaction->getIdSynchrone());
         }
 
@@ -94,14 +96,15 @@ class ApiController extends Controller
         $user = $em->getRepository('UserBundle:User')
                    ->findOneBy(array('email' => $inputData['user_email']));
         
-        $branch = $em->getRepository('KmBundle:Branch')
-                     ->find($inputData['branch_online_id']);
+        $branch = $user->getBranch();
         
         //Make sure object exist
         if((!$user) || (!$branch)){
             $faild = true;
             $faildMessage = 'user or branch does not exist';
-            return array('faildMessage' => $faildMessage, 'status' => $faild);
+            return array('faild' => $faild,
+                     'faild_message' => $faildMessage,
+                     'st_synchrone_id' => 'null');
         }else{
             //Get the STransaction handler service
             $saleHandler = $this->get('transaction.sale_handler');
@@ -113,7 +116,7 @@ class ApiController extends Controller
             ->findOneBy(array('idSynchrone' => $inputData['st_synchrone_id']));
         
         return array('faild' => $faild,
-                     'faildMessage' => $faildMessage,
+                     'faild_message' => $faildMessage,
                      'st_synchrone_id' => $stransaction->getIdSynchrone());
     }
 

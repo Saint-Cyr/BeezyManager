@@ -67,8 +67,8 @@ sonata_admin:
         handler: sonata.admin.security.handler.role
     templates:
         layout: KmBundle::standard_layout.html.twig
-    title_logo: images/logo.png
-    title: BeezyManager
+    title_logo: images/logo.jpg
+    title: BSol
     dashboard:
         blocks:
             - { position: left, type: sonata.admin.block.admin_list, settings: {groups: [Transaction]} }

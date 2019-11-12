@@ -52,6 +52,11 @@ class DefaultController extends Controller
                 array('stocked' => $stocked, 'destocked' => $destocked,
                       'canceledSTransactions' => $canceledSTransactions));
     }
+   
+    public function ReportD1Action()
+    {
+        return $this->render('KmBundle:Default:d1.html.twig');
+    }
     
     public function dashboardAction()
     {
