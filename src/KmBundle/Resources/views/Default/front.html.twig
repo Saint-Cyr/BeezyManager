@@ -10,10 +10,14 @@
     <title>BSol Server</title>
 
     <!-- Bootstrap -->
-    <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('web2/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('web2/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('web2/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('web2/css/AdminLTE.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('web2/css/_all-skins.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('web2/css/ionicons.min.css') }}"/>
+    <link href="{{ asset('web2/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
     <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/logo_bsol2.ico') }}' />
@@ -26,60 +30,99 @@
         <div class="col-md-12">
           <div class="col-middle">
             <div class="text-center text-center">
-                {#<img src="{{ asset('images/logo2.jpg') }}" style="width: 170px; height: 155px; margin-bottom: 23px;" />#}
+                
+                
                 </br>
                 </br>
+                </br>
+                </br>
+                </br>
+              <img src="{{ asset('images/logo.jpg') }}" style=" width: 200px; margin-bottom: 23px;" />
+              
+              </br>
                 </br>
               <div class="row top_tiles">
               
-              <a href="{{ path('admin_transaction_stransaction_create') }}">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
-                  <div class="count">POS 3</div>
-                  
+              
+              <a href="{{ path('admin_transaction_stransaction_create') }}" style="color: gray">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-red">P</span>
+
+                    <div class="info-box-content">
+                        <br>
+                      <span class="info-box-number">
+                          POS #3 
+                      </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
                 </div>
-              </div>
-              </a>
+                </a>
               
             {% if (is_granted('ROLE_ADMIN')) %}
-              <a href="{{ path('sonata_admin_dashboard') }}">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-bars"></i></div>
-                  <div class="count">D 1</div>
-                 
-                </div>
-              </div>
-              </a>
-              {% endif %}
-              {% if (is_granted('ROLE_SUPER_ADMIN')) %}
-              <a href="#">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-line-chart"></i></div>
-                  <div class="count">D 2</div>
-                 
-                </div>
-              </div>
-              </a>
-              <a href="{{ path('km_dashboard') }}">
-              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i class="fa fa-line-chart"></i></div>
-                  <div class="count">D 2</div>
-                 
-                </div>
-              </div>
-              </a>
               
+              {% endif %}
+              
+              {% if (is_granted('ROLE_SUPER_ADMIN')) %}
+              
+              <a href="{{ path('sonata_admin_dashboard') }}" style="color: gray">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-red">D1</span>
+
+                    <div class="info-box-content">
+                        <br>
+                      <span class="info-box-number">
+                          Dashboard #1 
+                      </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                </a>
+              
+              <a href="#" style="color: gray">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-red">D2</span>
+
+                    <div class="info-box-content">
+                        <br>
+                      <span class="info-box-number">
+                          Dashboard #2
+                      </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                </a>
+                <a href="#" style="color: gray">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-red">D3</span>
+
+                    <div class="info-box-content">
+                        <br>
+                      <span class="info-box-number">
+                          Dashboard #3 
+                      </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                </a>
               {% endif %} 
               
             
             </div>
             <hr>
                 <span style="color: white;">©</span>
-              <a href="#" style="color: white;"> 2019 - BSol</a>
+              <a href="#" style="color: white;"> 2020 - BSol</a>
             </div>
           </div>
         </div>

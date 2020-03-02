@@ -7,26 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>BeezyManager</title>
+    <title>BSol</title>
 
-    <!-- Bootstrap -->
-    <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    
-    <!-- Custom styling plus plugins -->
-    <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
-    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
+     <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('web2/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('web2/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('web2/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('web2/css/AdminLTE.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('web2/css/_all-skins.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('web2/css/ionicons.min.css') }}"/>
+    <link href="{{ asset('web2/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/logo_bsol2.ico') }}' />
   </head>
 
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
         
-          {% if(is_granted('ROLE_SUPER_ADMIN')) %}
-          {% include 'admin/sidebar_vendor.html.twig' %}
-          {% endif %}
-          {% include 'admin/topnav.html.twig' %}
+          
 
         
 
@@ -41,18 +39,12 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Sale transaction Report <small></small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
+                    
+                    
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-
+                    
                     <section class="content invoice">
                       <!-- title row -->
                       <div class="row">
@@ -61,6 +53,8 @@
                         </div>
                         <!-- /.col -->
                       </div>
+                       <img src="{{ asset('images/logo.jpg') }}" style=" width: 80px; margin-bottom: 23px;" />
+                      
                       <!-- info row -->
                       
                       <!-- /.row -->
