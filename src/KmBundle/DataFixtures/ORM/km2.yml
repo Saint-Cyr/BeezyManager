@@ -106,6 +106,7 @@ TransactionBundle\Entity\STransaction:
     stransaction4:
         totalAmount: 200
         branch: '@branch2'
+        user: '@seller'
         createdAt: <(new \DateTime('now'))>
 
     stransaction5:

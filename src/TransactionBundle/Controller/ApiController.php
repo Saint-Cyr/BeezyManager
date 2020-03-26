@@ -9,6 +9,91 @@ use TransactionBundle\Entity\STransaction;
 class ApiController extends Controller
 {
     
+     /*
+     * This action aims to receive and send data from and to the BSol
+     * Client in order to upload sales transaction to the server online
+     */
+    public function postUpload2Action(Request $request)
+    {
+        //Get the serverSynchronizerHandler service
+        
+        //Validate the authenticity of the connected user from BSol Client
+        
+        //Validate the data structure
+        
+        //Validate the content
+        return array('faild' => 'Some message');
+    }
+    
+     /*
+     * @Deprecated since 0.4-server
+     * This action aims to receive and send data from and to the BSol
+     * Client in order to upload sales transaction to the server online
+     */
+    public function postUploadAction(Request $request)
+    {        
+        //Verbose
+        $faild = false;
+        $faildMessage = 'successful';
+
+        $em = $this->getDoctrine()->getManager();
+        //Get the input data sent by the front application
+        $inputData = json_decode($request->getContent(), true);
+        //Validate the data structure and it content
+        if(array_key_exists('st_synchrone_id', $inputData)&&
+           array_key_exists('user_email', $inputData)&&
+           array_key_exists('order', $inputData)&&
+           array_key_exists('total', $inputData)&&
+           array_key_exists('date_time', $inputData)&&
+           array_key_exists('branch_online_id', $inputData))
+        {
+            // As data structure is valid, then jump to the next step
+            // Process evvery thing here...
+        }else{
+            return array('faild' => "Invalid data structure");
+        }
+        
+        //If stransaction already exist, then get out.
+        $stransaction = $em->getRepository('TransactionBundle:STransaction')
+            ->findOneBy(array('idSynchrone' => $inputData['st_synchrone_id']));
+        
+        if($stransaction){
+            $faild = true;
+            $faildMessage = 'transaction already exists';
+            return array('faild' => $faild,
+                     'remove_st' => true,
+                     'faild_message' => $faildMessage,
+                     'st_synchrone_id' => $stransaction->getIdSynchrone());
+        }
+
+        //Get the branch from the user object
+        $user = $em->getRepository('UserBundle:User')
+                   ->findOneBy(array('email' => $inputData['user_email']));
+        
+        $branch = $user->getBranch();
+        
+        //Make sure object exist
+        if((!$user) || (!$branch)){
+            $faild = true;
+            $faildMessage = 'user or branch does not exist';
+            return array('faild' => $faild,
+                     'faild_message' => $faildMessage,
+                     'st_synchrone_id' => 'null');
+        }else{
+            //Get the STransaction handler service
+            $saleHandler = $this->get('transaction.sale_handler');
+            //Process the sale transaction
+            $saleHandler->processSaleTransaction2($inputData, $branch, $user);
+        }
+        //Fetch the idSynchrone to give it back in order for the client to remove it from it cache
+        $stransaction = $em->getRepository('TransactionBundle:STransaction')
+            ->findOneBy(array('idSynchrone' => $inputData['st_synchrone_id']));
+        
+        return array('faild' => $faild,
+                     'faild_message' => $faildMessage,
+                     'st_synchrone_id' => $stransaction->getIdSynchrone());
+    }
+    
     /*
      * @deprecated since 0.3-server
      */
@@ -55,71 +140,11 @@ class ApiController extends Controller
                      'message' => 'successfull download', 'branch' => $Branch);
     }
     
-    public function postUploadAction(Request $request)
-    {
-        
-        //Verbose
-        $faild = false;
-        $faildMessage = 'successful';
-
-        $em = $this->getDoctrine()->getManager();
-        //Get the input data sent by the front application
-        $inputData = json_decode($request->getContent(), true);
-        //Validate the data structure and it content
-        if(array_key_exists('st_synchrone_id', $inputData)&&
-           array_key_exists('user_email', $inputData)&&
-           array_key_exists('order', $inputData)&&
-           array_key_exists('total', $inputData)&&
-           array_key_exists('date_time', $inputData)&&
-           array_key_exists('branch_online_id', $inputData))
-        {
-            // Process evvery thing here...
-            
-        }else{
-            return array('faild' => "Invalid data structure");
-        }
-        
-        //If stransaction already exist, then get out.
-        $stransaction = $em->getRepository('TransactionBundle:STransaction')
-            ->findOneBy(array('idSynchrone' => $inputData['st_synchrone_id']));
-        
-        if($stransaction){
-            $faild = true;
-            $faildMessage = 'transaction already exists';
-            return array('faild' => $faild,
-                     'remove_st' => true,
-                     'faild_message' => $faildMessage,
-                     'st_synchrone_id' => $stransaction->getIdSynchrone());
-        }
-
-        //Get the branch from the user object
-        $user = $em->getRepository('UserBundle:User')
-                   ->findOneBy(array('email' => $inputData['user_email']));
-        
-        $branch = $user->getBranch();
-        
-        //Make sure object exist
-        if((!$user) || (!$branch)){
-            $faild = true;
-            $faildMessage = 'user or branch does not exist';
-            return array('faild' => $faild,
-                     'faild_message' => $faildMessage,
-                     'st_synchrone_id' => 'null');
-        }else{
-            //Get the STransaction handler service
-            $saleHandler = $this->get('transaction.sale_handler');
-            //Process the sale transaction
-            $saleHandler->processSaleTransaction2($inputData, $branch, $user);
-        }
-        //Fetch the idSynchrone to give it back in order for the client to remove it from it cache
-        $stransaction = $em->getRepository('TransactionBundle:STransaction')
-            ->findOneBy(array('idSynchrone' => $inputData['st_synchrone_id']));
-        
-        return array('faild' => $faild,
-                     'faild_message' => $faildMessage,
-                     'st_synchrone_id' => $stransaction->getIdSynchrone());
-    }
-
+    /*
+     * @deprecated since 0.4-server
+     * need to be remove after implementing all functional test
+     * cases
+     */
     public function postSaleTransactionAction(Request $request)
     {
         //Get the input data sent by the front application

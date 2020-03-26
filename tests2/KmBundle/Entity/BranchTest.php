@@ -3,7 +3,7 @@
 /*
  * This file is part of Components of KingManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) TinzapaTech <mapoukacyr@yahoo.com>
+ * (c) BSol 2020 <mapoukacyr@yahoo.com>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
@@ -34,7 +34,7 @@ class BranchTest extends WebTestCase
     {
         //Notice that one of the stock is decreasing by a script any time test is running
         //Get the branch
-        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
+        $branch = $this->em->getRepository('KmBundle:Branch')->find(1);
         //it have to be BATA
         $this->assertEquals($branch->getName(), 'BATA');
         //Get all the alertStocks from this branch
