@@ -30,14 +30,13 @@ class DefaultController extends Controller
     {
         //Get all the branch
         $em = $this->getDoctrine()->getManager();
-        $branches = $em->getRepository('KmBundle:Branch')->findAll();
-        
+        $branches = $em->getRepository('KmBundle:Branch')->findAll();   
         return $this->render('KmBundle:Default:alert_stock.html.twig', array('branches' => $branches));
     }
     
     public function stockUpdateAction()
     {
-        //Get all the branch
+        //Get the entity manager
         $em = $this->getDoctrine()->getManager();
         //Get the branch
         $branch = $this->getUser()->getBranch();
@@ -55,7 +54,44 @@ class DefaultController extends Controller
    
     public function ReportD1Action()
     {
-        return $this->render('KmBundle:Default:d1.html.twig');
+        //Get the statistic handler service
+        $statisticHandler = $this->get('km.statistic_handler');
+        //Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get all the branches
+        $branches = $em->getRepository('KmBundle:Branch')->findAll();
+        //Prepare resum for all branch
+        $totalSale = null;
+        $totalProfit = null;
+        $totalExpenditure = null;
+        $totalBalance = null;
+
+        foreach ($branches as $b){
+            //Hydrate every branch
+            $statisticHandler->setBranchFlyData($b);
+            $totalSale = $totalSale + $b->getFlySaleAmount();
+            $totalExpenditure = $totalExpenditure + $b->getFlyExpenditureAmount();
+            $totalProfit = $totalProfit + $b->getFlyProfitAmount();
+            $totalBalance = $totalBalance + $b->getFlyBalanceAmount();
+        }
+
+        //Get all the sale transaction amount for every month
+        $stSales = $statisticHandler->getSaleByMonth();
+        //Get all the profit transaction amount for every month
+        $stProfits = $statisticHandler->getProfitByMonth();
+        /*//Get the resum for all branches
+        $totalSale = $statisticHandler->getSale();
+        $totalProfit = $statisticHandler->getProfit();
+        $totalExpenditure = $statisticHandler->getExpenditure();
+        $totalBalance = $statisticHandler->getBalance();*/
+
+        return $this->render('KmBundle:Default:d1.html.twig', array('stransactions' => $stSales,
+                                                                        'stProfits' => $stProfits,
+                                                                        'branches' => $branches,
+                                                                        'totalSale' => $totalSale,
+                                                                        'totalProfit' => $totalProfit,
+                                                                        'totalBalance' => $totalBalance,
+                                                                        'totalExpenditure' => $totalExpenditure,));
     }
     
     public function dashboardAction()
@@ -238,6 +274,4 @@ class DefaultController extends Controller
 
         return $contents;
     }
-    
-    
 }

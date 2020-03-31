@@ -32,17 +32,30 @@ class SaleTest extends WebTestCase
     public function testGetProfit()
     {
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
-        $this->assertEquals($sale->getProfit(), 123);
+        $this->assertEquals($sale->getProfit(), 50);
+        $sale2 = $this->em->getRepository('TransactionBundle:Sale')->find(2);
+        $this->assertEquals($sale2->getProfit(), 150);
         
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(12);
-        $this->assertEquals($sale->getProfit(), 4000);
+        $this->assertEquals($sale->getProfit(), 0); 
         
         
     }
     
+    public function testSetProfit()
+    {
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
+        //test the default value of the profit (it have to be 50)
+        $this->assertEquals($sale->getProfit(), 50);
+        //Now, set a custom value for the profit such as 80. This cas is necessary when geting the profit from BSol client
+        $sale->setProfit(80);
+        $this->assertEquals($sale->getProfit(), 80);
+    }
+
+
     public function testGetAmount()
     {
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
-        $this->assertEquals($sale->getAmount(), 130);
+        $this->assertEquals($sale->getAmount(), 150);
     }
 }

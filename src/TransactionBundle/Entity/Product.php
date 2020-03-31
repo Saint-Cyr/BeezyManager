@@ -5,6 +5,7 @@ namespace TransactionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -76,6 +77,13 @@ class Product
     private $imagePos;
     
     /**
+     * @Assert\Length(
+     *      min = 13,
+     *      max = 13,
+     *      minMessage = "Barcode not supported",
+     *      maxMessage = "Barcode not supported",
+     * )
+     * 
      * @var string
      *
      * @ORM\Column(name="barcode", type="string", length=255, nullable=true, unique=true)

@@ -147,12 +147,17 @@ class Sale
      *
      * @return Sale
      */
-    public function setProfit()
+    public function setProfit($profit = null)
     {
-        //calculate the profit based on the unit & whole sale price of the product
-        $profit = $this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice();
-        //Don't forget to multiply profit by the quantity
-        $this->profit = ($profit * $this->getQuantity());
+        if($profit){
+            $this->profit = $profit;
+        }else{
+            //calculate the profit based on the unit & whole sale price of the product
+            $profit = $this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice();
+            //Don't forget to multiply profit by the quantity
+            $this->profit = ($profit * $this->getQuantity());
+        }
+        
         
         return $this;
     }

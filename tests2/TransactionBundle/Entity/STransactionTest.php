@@ -34,12 +34,16 @@ class STransactionTest extends WebTestCase
     {
         //Get a STransaction from the fixtures
         $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
-        //$this->assertEquals($STransaction->getProfit(), 1230.00);
+        $this->assertEquals($STransaction->getProfit(), 3000.00);
+        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(5);
+        $this->assertEquals($STransaction->getProfit(), 520.00);
     }
     
     public function testGetTotalAmount()
     {
         $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
-        $this->assertEquals($STransaction->getTotalAmount(), 10000);
+        $this->assertEquals($STransaction->getTotalAmount(), 3500);
+        $STransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
+        $this->assertEquals($STransaction2->getTotalAmount(), 6300);
     }
 }

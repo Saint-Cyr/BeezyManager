@@ -15,7 +15,7 @@ class ApiController extends Controller
      */
     public function postUpload2Action(Request $request)
     {
-        //Get the serverSynchronizerHandler service
+        //Get the saleHandler service
         
         //Validate the authenticity of the connected user from BSol Client
         
@@ -167,7 +167,6 @@ class ApiController extends Controller
                             
         $response->headers->set('Access-Control-Allow-Origin', 'http://127.0.0.1');
         return $response;
-        //return View::create(array('info' => 'user of verifier_token: '.$inputData['verifier_token'].' has been logged out successfully.'), 200);
         
         return 'successfull transaction!';
     }

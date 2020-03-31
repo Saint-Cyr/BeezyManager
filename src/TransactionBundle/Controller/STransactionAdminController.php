@@ -80,6 +80,8 @@ class STransactionAdminController extends CRUDController
                 foreach ($object->getSales() as $sale){
                     //Update the stock
                     $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity(), true);
+                    //set profit
+                    $sale->setProfit();
                 }
                 //$object->setTotalAmount($object->getTotalAmount())
                 

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of Components of BeezyManager project
  * By contributor S@int-Cyr MAPOUKA
@@ -33,7 +32,7 @@ class SaleHandlerTest extends WebTestCase
     }
     
     /*
-     * By @Saint-Cyr MAPOUKA <mapoukacyr@yahoo.fr>
+     * By @Saint-Cyr MAPOUKA <med@itechcar.com>
      * This test make sure that when the client send data to the server
      * during a STransaction Synchronization, and when the Data Structure is right
      * then it have to be persisted in the DB. Workflow:

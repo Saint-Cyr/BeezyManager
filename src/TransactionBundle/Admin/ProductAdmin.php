@@ -41,6 +41,7 @@ class ProductAdmin extends AbstractAdmin
             
             $listMapper->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('categories')
+            ->add('barcode')
             ->add('imagePos', null, array('editable' => true))
             ->add('locked', null, array('editable' => true))
             ->add('_action', null, array(
@@ -101,6 +102,7 @@ class ProductAdmin extends AbstractAdmin
         if(!$object->getWholeSalePrice()){
             $object->setWholeSalePrice(0);
         }
+        //If the barcode has not been filled then generate a new one   
     }
     
     public function getBatchActions()
