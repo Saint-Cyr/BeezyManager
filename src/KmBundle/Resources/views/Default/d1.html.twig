@@ -1037,7 +1037,9 @@
       {% endverbatim %}
       maintainAspectRatio     : true,
       //Boolean - whether to make the chart responsive to window resizing
-      responsive              : true
+      responsive              : true,
+      scaleLabel: function(label){return  '' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
+      
     }
     
     

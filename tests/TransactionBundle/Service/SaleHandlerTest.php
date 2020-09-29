@@ -34,7 +34,7 @@ class SaleHandlerTest extends WebTestCase
     /*
      * By @Saint-Cyr MAPOUKA <med@itechcar.com>
      * This test make sure that when the client send data to the server
-     * during a STransaction Synchronization, and when the Data Structure is right
+     * during a STransaction Synchronization, and when the Data Structure is valid
      * then it have to be persisted in the DB. Workflow:
      * 1- Build an InputData as it has been json_decode in the ApiController (Data Structure) with uniq st_synchrone_id
      * 2- Use the service saleHandler to process it (saleHandler:processSaleTransaction2(...))

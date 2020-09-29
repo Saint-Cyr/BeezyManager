@@ -57,8 +57,9 @@ class ProductAdminController extends CRUDController
                     print_r($rows);exit;
                     
                 }
+                
         //Read products list with eventually other information and write them in a CSV file
-                if(false){
+                if(true){
                     //load spreadsheet
                     $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(getcwd().'/original.xlsx');
 

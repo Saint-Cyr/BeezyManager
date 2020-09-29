@@ -21,10 +21,8 @@ class DefaultControllerTest extends WebTestCase
         //Make sure the front page is displayed correctly
         $this->assertContains('P', $client1->getResponse()->getContent());
         $this->assertContains('D1', $client1->getResponse()->getContent());
-        $this->assertContains('POS #3', $client1->getResponse()->getContent());
         $this->assertContains('Dashboard #1', $client1->getResponse()->getContent());
         $this->assertContains('Dashboard #2', $client1->getResponse()->getContent());
-        $this->assertContains('Dashboard #3', $client1->getResponse()->getContent());
         $this->assertContains('logo.jpg', $client1->getResponse()->getContent());
         //Go to the POS #3 and make sure it is displayed well
         $crawler = $client1->request('GET', '/admin/transaction/stransaction/create');

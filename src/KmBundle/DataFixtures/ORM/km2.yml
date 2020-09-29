@@ -86,6 +86,9 @@ KmBundle\Entity\Branch:
     branch2:
         name: VALLEY
         idSynchrone: qwerty2
+    branch3:
+        name: BRANCH_1
+        idSynchrone: qwerty3
         
 TransactionBundle\Entity\STransaction:
     stransaction1:
@@ -266,7 +269,7 @@ UserBundle\Entity\User:
         branch: "@branch1"
         email: seller@domain.com
         plainPassword: test
-        enabled: true
+        enabled: false
         roles: [ROLE_SELLER]
         
 TransactionBundle\Entity\Stock:

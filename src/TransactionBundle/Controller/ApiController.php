@@ -11,18 +11,36 @@ class ApiController extends Controller
     
      /*
      * This action aims to receive and send data from and to the BSol
-     * Client in order to upload sales transaction to the server online
+     * Client in order to upload sales transaction to the server 
      */
     public function postUpload2Action(Request $request)
     {
+        
+        //Get the input data sent by the front application (BSol Client, Android App, ...)
+        $inputData = json_decode($request->getContent(), true);
         //Get the saleHandler service
+        $saleHandler = $this->get('transaction.sale_handler');
+        //validate the data structure
+        $outPut1 = $saleHandler->isDataStructureValid($inputData);
+        if(!$outPut1['response'])
+        {
+            return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => $outPut1['description']);
+        }
+        // Validate the authenticity of the BSol Client Application. In order to achieve this,
+        //check the authenticity of the branch related to BSol Client
+        $outPut2 = $saleHandler->isBranchValid($inputData['branch_online_id']);
+        if(!$outPut2['response'])
+        {
+            return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => $outPut2['description']);
+        }
+        //Validate the authenticity of the BSol Client seller (the one that have made the Transaction)
+        $outPut3 = $saleHandler->isSellerGenius($inputData['user_email']);
+        if(!$outPut3['response'])
+        {
+            return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => $outPut3['description']);
+        }
         
-        //Validate the authenticity of the connected user from BSol Client
-        
-        //Validate the data structure
-        
-        //Validate the content
-        return array('faild' => 'Some message');
+        return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => 'test....');
     }
     
      /*

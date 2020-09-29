@@ -141,7 +141,7 @@ class Sale
     }
 
     /**
-     * Set profit
+     * Set profit. This methode set the profit of a sale object (hardly set)
      *
      * @param float $profit
      *

@@ -85,11 +85,91 @@ class SaleHandler
             //Call the stocktHandler service to update the stock
             $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt'], true);
             $sale->setAmount($s['totalPrice']);
+            $sale->setProfit($s['saleProfit']);
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);
         }
         //Persist its in DB.
         $this->em->persist($stransaction);
         $this->em->flush();
+    }
+    
+    /*
+     * This method aims to check the authencity of the Seller that have
+     * made the STransaction from the BSol Client. It process is as follow:
+     * 1: make sure the user related to the uploaded email exists
+     * 2: Check and make sure the user is not desabled (isEnalbled() = true)
+     * 3: @return array('response' => true, 'description' => '');
+     */
+    public function isSellerGenius($userEmail)
+    {
+        //Make sure the user related to the uploaded email does exist in DB.
+        $user = $this->em->getRepository('UserBundle:User')->findOneBy(array('email' => $userEmail));
+        if(!$user){
+            return array('response' => false, 'description' => 'the user related to the email: '.$userEmail.' does not exist');
+        }
+        //Make sure the user is not locked neighether desible
+        if($user->isAccountNonLocked() && $user->isEnabled()){
+            return array('response' => TRUE, 'description' => '');
+        }else{
+            return $response = array('response' => false, 'description' => 'User Account related to the email '.$userEmail.' is locked or Desabled');
+        }
+    }
+    
+    /*
+     * this method aims to check the validity of the Data Structure as follow
+     * 1-check the integrety of the global data structure ($inputData)
+     */
+    public function isDataStructureValid($inputData)
+    {
+       //Make sure the $inputData array content 5 couples of key => value(s)
+       if(count($inputData) != 6)
+       {
+           return array('response' => false, 
+                        'description' => 'the main data structure must have 6 couple of keys => value(s) but it actually have '.count($inputData).'');
+       }
+       //Make sure each one of the required keys does exist
+       if(!(array_key_exists('user_email', $inputData))){
+           return array('response' => false, 'description' =>  'email key does not exist in the Data Structure');
+       }
+       if(!(array_key_exists('st_synchrone_id', $inputData))){
+           return array('response' => false, 'description' =>  'st_synchrone_id key does not exist in the Data Structure');
+       }
+       if(!(array_key_exists('date_time', $inputData))){
+           return array('response' => false, 'description' =>  'date_time key does not exist in the Data Structure');
+       }
+       if(!(array_key_exists('total', $inputData))){
+           return array('response' => false, 'description' =>  'total key does not exist in the Data Structure');
+       }
+       if(!(array_key_exists('order', $inputData))){
+           return array('response' => false, 'description' =>  'order key does not exist in the Data Structure');
+       }
+       if(!(array_key_exists('branch_online_id', $inputData))){
+           return array('response' => false, 'description' =>  'branch_online_id key does not exist in the Data Structure');
+       }
+       //make sure the $order data structure content all of the 3 required keys
+       if(count($inputData['order'][0]) != 4)
+       {
+           return array('response' => false, 'description' => 'the data structure $order must have 3 couples of keys => value(s)');
+       }
+           
+       return array('response' => true, 'description' => '');
+    }
+    
+    /*
+     * this method aims to validate the branch to which the BSol Client has been
+     * installed
+     */
+    public function isBranchValid($branchId)
+    {
+        //Check whether the branch exist in the server DB.
+        $branchFromServer = $this->em->getRepository('KmBundle:Branch')->find($branchId);
+        
+        if(!$branchFromServer){
+            return array('response' => false, 'description'=> 'branch related to the #ID '.$branchId.' not found from the server DB');
+        }
+        
+        return array('response' => true, 'description'=> '');
+        
     }
 }
