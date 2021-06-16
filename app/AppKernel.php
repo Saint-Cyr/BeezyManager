@@ -27,7 +27,9 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new UserBundle\UserBundle(),
             new Knp\Bundle\TimeBundle\KnpTimeBundle(),
-            new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
+            //new EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle(),
+            #new EightPoints\Bundle\GuzzleBundle\GuzzleBundle(),
+            //new \EightPoints\Bundle\GuzzleBundle\EightPointsGuzzleBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Yectep\PhpSpreadsheetBundle\PhpSpreadsheetBundle(),
         ];

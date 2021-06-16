@@ -11,9 +11,9 @@ services:
         class: KmBundle\Service\NotificationHandler
         arguments: ["@doctrine.orm.entity_manager"]
 
-    km.synchronizer_handler:
-            class: KmBundle\Service\SynchronizerHandler
-            arguments: ["@guzzle.client.api_crm", "@doctrine.orm.entity_manager"]
+    #km.synchronizer_handler:
+            #class: KmBundle\Service\SynchronizerHandler
+            #arguments: ["@guzzle.client.api_crm", "@doctrine.orm.entity_manager"]
         
     km.report_handler:
         class: KmBundle\Service\ReportHandler
