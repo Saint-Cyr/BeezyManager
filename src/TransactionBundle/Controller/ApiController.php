@@ -14,8 +14,7 @@ class ApiController extends Controller
      * Client in order to upload sales transaction to the server 
      */
     public function postUpload2Action(Request $request)
-    {
-        
+    {   
         //Get the input data sent by the front application (BSol Client, Android App, ...)
         $inputData = json_decode($request->getContent(), true);
         //Get the saleHandler service
@@ -40,7 +39,21 @@ class ApiController extends Controller
             return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => $outPut3['description']);
         }
         
-        return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => 'test....');
+        //Get entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get the branch from the user object
+        $user = $em->getRepository('UserBundle:User')
+                   ->findOneBy(array('email' => $inputData['user_email']));
+        
+        $branch = $user->getBranch();
+
+        //Process the sale transaction
+        $saleHandler->processSaleTransaction2($inputData, $branch, $user);
+        //Fetch the idSynchrone to give it back in order for the client to remove it from it cache
+        $stransaction = $em->getRepository('TransactionBundle:STransaction')
+            ->findOneBy(array('idSynchrone' => $inputData['st_synchrone_id']));
+        
+        return array('faild' => false, 'st_synchrone_id'=> $stransaction->getIdSynchrone(), 'faildMessage' => 'test....');
     }
     
      /*

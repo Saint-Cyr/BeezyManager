@@ -48,7 +48,8 @@ sonata_admin:
     security:
         handler: sonata.admin.security.handler.role
     templates:
-        layout: KmBundle::standard_layout.html.twig
+        #layout: KmBundle::standard_layout.html.twig
+        layout: SonataAdminBundle::standard_layout.html.twig
     title_logo: images/logo.jpg
     title: BSol
     dashboard:

@@ -65,7 +65,7 @@ class SaleHandler
         $stransaction->setCreatedAt($dateTime);
         $stransaction->setTotalAmount($inputData['total']);
         $stransaction->setBranch($branch);
-        //set the idSynchrone sent by the client
+        //populate the $stransaction with the idSynchrone sent by the client
         $stransaction->setIdSynchrone($inputData['st_synchrone_id']);
         //Link the employee to the transaction
         $stransaction->setUser($user);

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css2/AdminLTE.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css2/_all-skins.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css2/ionicons.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css2/icheck.css') }}"/>
     <!-- Google Font -->
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <!-- Font Awesome -->
@@ -525,7 +526,7 @@
           <!-- small box -->
           <div style="color: #dd4b39" class="small-box bg-gray">
             <div class="inner">
-              <h3>{{ totalSale }}<sup style="font-size: 20px"></sup></h3>
+              <h3>{{ totalSale|format("currency") }}<sup style="font-size: 20px"></sup></h3>
 
               <p>Sale (today)</p>
             </div>
@@ -584,12 +585,201 @@
       </div>
       <!-- /.row -->
 
+      <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="box-title">Date picker</h3>
+            </div>
+            <div class="box-body">
+              <!-- Date -->
+              <div class="form-group">
+                <label>Date:</label>
+
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="datepicker">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+              <!-- Date range -->
+              <div class="form-group">
+                <label>Date range:</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="reservation">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+              <!-- Date and time range -->
+              <div class="form-group">
+                <label>Date and time range:</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="reservationtime">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+
+              <!-- Date and time range -->
+              <div class="form-group">
+                <label>Date range button:</label>
+
+                <div class="input-group">
+                  <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                    <span>
+                      <i class="fa fa-calendar"></i> Date range picker
+                    </span>
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.form group -->
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- iCheck -->
+          <div class="box box-success">
+            <div class="box-header">
+              <h3 class="box-title">iCheck - Checkbox &amp; Radio Inputs</h3>
+            </div>
+            <div class="box-body">
+              <!-- Minimal style -->
+
+              <!-- checkbox -->
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" class="minimal" checked>
+                </label>
+                <label>
+                  <input type="checkbox" class="minimal">
+                </label>
+                <label>
+                  <input type="checkbox" class="minimal" disabled>
+                  Minimal skin checkbox
+                </label>
+              </div>
+
+              <!-- radio -->
+              <div class="form-group">
+                <label>
+                  <input type="radio" name="r1" class="minimal" checked>
+                </label>
+                <label>
+                  <input type="radio" name="r1" class="minimal">
+                </label>
+                <label>
+                  <input type="radio" name="r1" class="minimal" disabled>
+                  Minimal skin radio
+                </label>
+              </div>
+
+              <!-- Minimal red style -->
+
+              <!-- checkbox -->
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" class="minimal-red" checked>
+                </label>
+                <label>
+                  <input type="checkbox" class="minimal-red">
+                </label>
+                <label>
+                  <input type="checkbox" class="minimal-red" disabled>
+                  Minimal red skin checkbox----update
+                </label>
+              </div>
+
+              <!-- radio -->
+              <div class="form-group">
+                <label>
+                  <input type="radio" name="r2" class="minimal-red" checked>
+                </label>
+                <label>
+                  <input type="radio" name="r2" class="minimal-red">
+                </label>
+                <label>
+                  <input type="radio" name="r2" class="minimal-red" disabled>
+                  Minimal red skin radio
+                </label>
+              </div>
+
+              <!-- Minimal red style -->
+
+              <!-- checkbox -->
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" class="flat-red" checked>
+                </label>
+                <label>
+                  <input type="checkbox" class="flat-red">
+                </label>
+                <label>
+                  <input type="checkbox" class="flat-red" disabled>
+                  Flat green skin checkbox
+                </label>
+              </div>
+
+              <!-- radio -->
+              <div class="form-group">
+                <label>
+                  <input type="radio" name="r3" class="flat-red" checked>
+                </label>
+                <label>
+                  <input type="radio" name="r3" class="flat-red">
+                </label>
+                <label>
+                  <input type="radio" name="r3" class="flat-red" disabled>
+                  Flat green skin radio
+                </label>
+              </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              Many more skins available. <a href="http://fronteed.com/iCheck/">Documentation</a>
+            </div>
+          </div>
+          <!-- /.box -->
+        </div>
+
       <div class="row">
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 style="color: #dd4b39" class="box-title">Monthly Recap Report</h3>
-
+                Sales & Profit in
+                <h3 class="box-title">    
+                <div class="form-group">
+                  <select class="form-control">
+                    <option>{{ "now"|date('Y') }}</option>
+                    <option>{{ "now"|date('Y') - 1 }}</option>
+                    <option>{{ "now"|date('Y') - 2 }}</option>
+                    <option>{{ "now"|date('Y') - 3 }}</option>
+                    <option>{{ "now"|date('Y') - 4 }}</option>
+                    <option>{{ "now"|date('Y') - 5 }}</option>
+                    <option>{{ "now"|date('Y') - 6 }}</option>
+                    <option>{{ "now"|date('Y') - 7 }}</option>
+                    <option>{{ "now"|date('Y') - 8 }}</option>
+                    <option>{{ "now"|date('Y') - 9 }}</option>
+                    <option>{{ "now"|date('Y') - 10 }}</option>
+                  </select>
+                </div>
+                </h3>
+              
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
@@ -611,10 +801,6 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-8">
-                  <p class="text-center">
-                    <strong>Profit / Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                  </p>
-
                   <div class="chart">
                     <!-- Sales Chart Canvas -->
                     <canvas id="mainSalesChart" style="height: 315px;"></canvas>
@@ -923,6 +1109,12 @@
 <!--JS Dependencies -->
   <script src="{{ asset('js/jquery.min.js') }}"></script>
   <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/select2.full.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.inputmask.js') }}"></script>
+  <script src="{{ asset('js/jquery.inputmask.date.extensions.js') }}"></script>
+  <script src="{{ asset('js/moment.min.js') }}"></script>  
+  <script src="{{ asset('js/daterangepicker.js') }}"></script>
+  <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
   <script src="{{ asset('js/fastclick.js') }}"></script>
   <script src="{{ asset('js/adminlte.min.js') }}"></script>
   <script src="{{ asset('js/jquery.sparkline.min.js') }}"></script>
@@ -932,8 +1124,13 @@
   <script src="{{ asset('js/Chart.js') }}"></script>
   <script src="{{ asset('js/dashboard2.js') }}"></script>
  <script src="{{ asset('js/demo.js') }}"></script> 
+ <script src="{{ asset('js/icheck.min.js') }}"></script> 
+  
+  
+ 
+ 
   <!-- Select2 -->
-  <script src="{{ asset('js/select2.full.min.js') }}"></script>
+  
 
 <script>
     //--------------
@@ -1101,6 +1298,73 @@
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     pieChart.Doughnut(PieData, pieOptions)
+</script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
 </script>
 </body>
 </html>

@@ -38,7 +38,7 @@ class SaleHandlerTest extends WebTestCase
      * then it have to be persisted in the DB. Workflow:
      * 1- Build an InputData as it has been json_decode in the ApiController (Data Structure) with uniq st_synchrone_id
      * 2- Use the service saleHandler to process it (saleHandler:processSaleTransaction2(...))
-     * 3- Fecht it from the DB based on the st_synchrone_id.
+     * 3- Fetch it from the DB (client side) based on the st_synchrone_id.
      * 4- Check the integrety of it structure.
      * 5- Remove it from the DB. (By canceling it) 
      */
@@ -46,7 +46,7 @@ class SaleHandlerTest extends WebTestCase
     {
         $branch = $this->em->getRepository('KmBundle:Branch')->find(1);
         $user = $this->em->getRepository('UserBundle:User')->find(1);
-        //Step 1
+        //Step 1: prepare the inputData
         $order = [array('id' => 1, 'orderedItemCnt' => 2, 'totalPrice' => 234, 'saleProfit' => 50)];
         //Fake idSynchrone
         $idSynchrone = rand(0, 9999);
@@ -54,12 +54,13 @@ class SaleHandlerTest extends WebTestCase
                            'st_synchrone_id' => $idSynchrone, 'order' => $order);
         
         //Step 2
-        $this->saleHandler->processSaleTransaction2($inputData, $branch, $user);
+        $outPutFromSalesProcessing = $this->saleHandler->processSaleTransaction2($inputData, $branch, $user);
+        $this->assertEquals(array(), $outPutFromSalesProcessing);
         //Step 3
         $st = $this->em->getRepository('TransactionBundle:STransaction')->findOneBy(array('idSynchrone' => $idSynchrone));
         //Step 4
         $this->assertEquals($st->getIdSynchrone(), $idSynchrone);
-        //Step 5
+        //Step 5: remove the st from the client side
         //$this->em->remove($st);
         //$this->em->flush();
     }
