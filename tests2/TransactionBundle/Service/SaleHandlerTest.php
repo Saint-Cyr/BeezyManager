@@ -55,7 +55,7 @@ class SaleHandlerTest extends WebTestCase
         
         //Step 2
         $outPutFromSalesProcessing = $this->saleHandler->processSaleTransaction2($inputData, $branch, $user);
-        $this->assertEquals(array(), $outPutFromSalesProcessing);
+        $this->assertEquals('', $outPutFromSalesProcessing);
         //Step 3
         $st = $this->em->getRepository('TransactionBundle:STransaction')->findOneBy(array('idSynchrone' => $idSynchrone));
         //Step 4
@@ -102,11 +102,6 @@ class SaleHandlerTest extends WebTestCase
                            'user_email' => 'mapoukacyr@yahoo.fr', 'branch_online_id' => 1);
         $outPut = $this->saleHandler->isDataStructureValid($inputData);
         $this->assertEquals($outPut, array('response' => FALSE, 'description'=> 'date_time key does not exist in the Data Structure'));
-        //Case where user is genius
-        $order1 = [array(1, 'orderedItemCnt' => 2, 'totalPrice' => 234)];
-        $inputData = array('date_time' => '01-10-2015', 'total' => 234,
-                           'st_synchrone_id' => $idSynchrone, 'order' => $order1,
-                           'email' => 'mapoukacyr@yahoo.fr');
     }
     
     public function testIsBranchValid()

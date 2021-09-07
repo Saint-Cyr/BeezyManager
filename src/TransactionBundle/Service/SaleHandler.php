@@ -81,7 +81,7 @@ class SaleHandler
             $sale->setCreatedAt($dateTime);
             //Set the quantity
             $sale->setQuantity($s['orderedItemCnt']);
-            $sale->setProfit();
+            //$sale->setProfit();
             //Call the stocktHandler service to update the stock
             $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt'], true);
             $sale->setAmount($s['totalPrice']);

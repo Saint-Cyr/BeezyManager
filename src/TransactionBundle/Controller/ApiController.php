@@ -21,6 +21,7 @@ class ApiController extends Controller
         $saleHandler = $this->get('transaction.sale_handler');
         //validate the data structure
         $outPut1 = $saleHandler->isDataStructureValid($inputData);
+        
         if(!$outPut1['response'])
         {
             return array('faild' => true, 'st_synchrone_id'=> $inputData['st_synchrone_id'], 'faildMessage' => $outPut1['description']);
